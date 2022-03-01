@@ -2,17 +2,14 @@ import React from 'react';
 import { Global, css } from '@emotion/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../state';
+import { Actions } from '../state/actions';
 
 const App = () => {
   const state = useSelector((state) => state);
   console.log({ state });
 
   const dispatch = useDispatch();
-  const { depositMoney, withdrawMoney } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { DepositMoney, WithdrawMoney } = bindActionCreators(Actions, dispatch);
 
   return (
     <>
@@ -30,8 +27,8 @@ const App = () => {
           }
         `}
       />
-      <button onClick={() => depositMoney(1000)}>Deposit 1000</button>
-      <button onClick={() => withdrawMoney(1000)}>Withdraw 1000</button>
+      <button onClick={() => DepositMoney(1000)}>Deposit 1000</button>
+      <button onClick={() => WithdrawMoney(1000)}>Withdraw 1000</button>
     </>
   );
 };
