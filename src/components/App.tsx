@@ -1,8 +1,8 @@
 import React from 'react';
 import { Global, css } from '@emotion/react';
-import { useSelector, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Actions } from '../state/actions';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { Actions } from '../state/actions';
 import Nav from './Nav';
 import Main from './Main';
 
