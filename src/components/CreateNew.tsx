@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
+import RangesToolCreate from './RangesToolCreate';
 
 type CreateNewProps = {};
 
@@ -44,7 +45,7 @@ const CreateNew: React.VFC<CreateNewProps> = () => {
         onRequestClose={() => setIsModalOpen(false)}
         style={modalStyles}
       >
-        <div>Modal content</div>
+        <RangesToolCreate />
       </Modal>
     </>
   );
