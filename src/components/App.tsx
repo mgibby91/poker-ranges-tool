@@ -1,18 +1,9 @@
 import React from 'react';
 import { Global, css } from '@emotion/react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-// import { Actions } from '../state/actions';
 import Nav from './Nav';
 import Main from './Main';
 
 const App = () => {
-  // const state = useSelector((state) => state);
-  // console.log({ state });
-
-  // const dispatch = useDispatch();
-  // const { DepositMoney, WithdrawMoney } = bindActionCreators(Actions, dispatch);
-
   return (
     <>
       <Global

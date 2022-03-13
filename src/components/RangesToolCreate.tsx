@@ -1,19 +1,26 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { IRootState } from '../state/reducers/root-reducer';
-import { getAreCardsSame } from '../utils';
+import { createRangesArray, getAreCardsSame } from '../utils';
 
 const RangesToolCreate = () => {
-  const defaultRanges = useSelector((state: IRootState) => state.range.range);
+  const onCellUpdate = (rowIndex: number, cellIndex: Number) => {
+    console.log({ rowIndex, cellIndex });
+  };
 
   return (
     <RangesWrapper>
-      {defaultRanges.map((row) => {
+      {createRangesArray().map((row, rowIndex) => {
         return (
           <RowWrapper>
-            {row.map(({ value, isSuited }) => {
-              return <Cell areCardsSame={getAreCardsSame(value)}>{value}</Cell>;
+            {row.map(({ value, isSuited }, cellIndex) => {
+              return (
+                <Cell
+                  areCardsSame={getAreCardsSame(value)}
+                  onClick={() => onCellUpdate(rowIndex, cellIndex)}
+                >
+                  {value}
+                </Cell>
+              );
             })}
           </RowWrapper>
         );
