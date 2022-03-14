@@ -3,38 +3,67 @@ import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { useStores } from '../stores';
 import { getAreCardsSame, getCellBg, PlayType } from '../utils';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+type RangeForm = {
+  title: string;
+};
 
 const RangesToolCreate = observer(() => {
   const { rangesStore } = useStores();
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<RangeForm>();
 
   useEffect(() => {
     rangesStore.createNewRange();
   }, [rangesStore]);
 
+  const onSubmitNewRange: SubmitHandler<RangeForm> = (data) => {
+    console.log({ data });
+  };
+
   return (
-    <RangesWrapper>
-      {rangesStore.newRange.map((row, rowIndex) => {
-        return (
-          <RowWrapper>
-            {row.map(({ value, playType }, cellIndex) => {
-              return (
-                <Cell
-                  areCardsSame={getAreCardsSame(value)}
-                  playType={playType}
-                  onClick={() =>
-                    rangesStore.updateNewRange(rowIndex, cellIndex)
-                  }
-                >
-                  {value}
-                </Cell>
-              );
-            })}
-          </RowWrapper>
-        );
-      })}
-    </RangesWrapper>
+    <MainWrapper>
+      <RangesWrapper>
+        {rangesStore.newRange.map((row, rowIndex) => {
+          return (
+            <RowWrapper>
+              {row.map(({ value, playType }, cellIndex) => {
+                return (
+                  <Cell
+                    areCardsSame={getAreCardsSame(value)}
+                    playType={playType}
+                    onClick={() =>
+                      rangesStore.updateNewRange(rowIndex, cellIndex)
+                    }
+                  >
+                    {value}
+                  </Cell>
+                );
+              })}
+            </RowWrapper>
+          );
+        })}
+      </RangesWrapper>
+      <UserActionsWrapper>
+        <RangesTitleForm onSubmit={handleSubmit(onSubmitNewRange)}>
+          <input
+            placeholder='Enter title'
+            {...(register('title'), { required: true })}
+          />
+          <input type='submit' />
+        </RangesTitleForm>
+      </UserActionsWrapper>
+    </MainWrapper>
   );
 });
+
+const MainWrapper = styled.div`
+  display: flex;
+`;
 
 const RangesWrapper = styled.div`
   display: flex;
@@ -61,5 +90,9 @@ const Cell = styled.div<{ areCardsSame: boolean; playType: PlayType }>`
     cursor: pointer;
   }
 `;
+
+const UserActionsWrapper = styled.div``;
+
+const RangesTitleForm = styled.form``;
 
 export default RangesToolCreate;

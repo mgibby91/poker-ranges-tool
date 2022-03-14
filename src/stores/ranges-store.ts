@@ -1,4 +1,3 @@
-import { create } from 'domain';
 import { action, makeAutoObservable, observable } from 'mobx';
 import { createRangesArray, PlayType, RangesProperties } from '../utils';
 
