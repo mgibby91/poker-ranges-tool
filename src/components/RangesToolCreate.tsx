@@ -1,22 +1,29 @@
 import styled from '@emotion/styled';
-import React from 'react';
-import { createRangesArray, getAreCardsSame } from '../utils';
+import { observer } from 'mobx-react';
+import React, { useEffect } from 'react';
+import { useStores } from '../stores';
+import { getAreCardsSame, getCellBg, PlayType } from '../utils';
 
-const RangesToolCreate = () => {
-  const onCellUpdate = (rowIndex: number, cellIndex: Number) => {
-    console.log({ rowIndex, cellIndex });
-  };
+const RangesToolCreate = observer(() => {
+  const { rangesStore } = useStores();
+
+  useEffect(() => {
+    rangesStore.createNewRange();
+  }, [rangesStore]);
 
   return (
     <RangesWrapper>
-      {createRangesArray().map((row, rowIndex) => {
+      {rangesStore.newRange.map((row, rowIndex) => {
         return (
           <RowWrapper>
-            {row.map(({ value, isSuited }, cellIndex) => {
+            {row.map(({ value, playType }, cellIndex) => {
               return (
                 <Cell
                   areCardsSame={getAreCardsSame(value)}
-                  onClick={() => onCellUpdate(rowIndex, cellIndex)}
+                  playType={playType}
+                  onClick={() =>
+                    rangesStore.updateNewRange(rowIndex, cellIndex)
+                  }
                 >
                   {value}
                 </Cell>
@@ -27,7 +34,7 @@ const RangesToolCreate = () => {
       })}
     </RangesWrapper>
   );
-};
+});
 
 const RangesWrapper = styled.div`
   display: flex;
@@ -38,7 +45,7 @@ const RowWrapper = styled.div`
   display: flex;
 `;
 
-const Cell = styled.div<{ areCardsSame: boolean }>`
+const Cell = styled.div<{ areCardsSame: boolean; playType: PlayType }>`
   border: 1px solid #d7dadc;
   width: 50px;
   height: 50px;
@@ -46,8 +53,8 @@ const Cell = styled.div<{ areCardsSame: boolean }>`
   justify-content: center;
   align-items: center;
   margin: 2px;
-
-  background-color: ${({ areCardsSame }) => (areCardsSame ? '#d7dadc39' : '')};
+  background-color: ${({ areCardsSame, playType }) =>
+    getCellBg(playType, areCardsSame)};
   user-select: none;
 
   &:hover {

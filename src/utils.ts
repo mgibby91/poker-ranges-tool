@@ -1,6 +1,6 @@
 const cards = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
 
-enum PlayType {
+export enum PlayType {
   Fold = 'fold',
   Play = 'play',
   Marginal = 'marginal',
@@ -46,4 +46,16 @@ export const createRangesArray = () => {
 
 export const getAreCardsSame = (cards: string) => {
   return cards.length === 2;
+};
+
+const playTypeBg = {
+  [PlayType.Fold]: 'none',
+  [PlayType.Play]: '#538d4e',
+};
+
+export const getCellBg = (playType: PlayType, cardsAreSame?: boolean) => {
+  if (cardsAreSame) {
+    return playType === PlayType.Play ? playTypeBg[playType] : '#d7dadc39';
+  }
+  return playTypeBg[playType];
 };
