@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { RangesProperties } from '../utils';
+import RangeThumbnail from './RangeThumbnail';
 
 type RangeProps = {
   title: string;
@@ -8,11 +9,17 @@ type RangeProps = {
 };
 
 const Range: React.VFC<RangeProps> = ({ title, range }) => {
-  return <RangeWrapper></RangeWrapper>;
+  return (
+    <RangeWrapper>
+      <RangeThumbnail range={range} />
+      <span>{title}</span>
+    </RangeWrapper>
+  );
 };
 
 const RangeWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 2px solid #d7dadc;

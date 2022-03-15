@@ -11,7 +11,6 @@ export class RangesStore {
     makeAutoObservable(this);
   }
 
-  // @observable defaultRange = createRangesArray();
   @observable newRange: RangesProperties[][] = createRangesArray();
   @observable userRanges: UserRange[] = [];
 
