@@ -45,7 +45,7 @@ const CreateNew: React.VFC<CreateNewProps> = () => {
         onRequestClose={() => setIsModalOpen(false)}
         style={modalStyles}
       >
-        <RangesToolCreate />
+        <RangesToolCreate closeModal={() => setIsModalOpen(false)} />
       </Modal>
     </>
   );
@@ -59,6 +59,7 @@ const CreateNewWrapper = styled.div`
   width: 15rem;
   height: 10rem;
   border-radius: 0.5rem;
+  margin: 1rem;
 
   &:hover {
     cursor: pointer;

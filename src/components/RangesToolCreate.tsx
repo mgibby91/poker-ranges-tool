@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useStores } from '../stores';
 import { getAreCardsSame, getCellBg, PlayType } from '../utils';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -9,60 +9,64 @@ type RangeForm = {
   title: string;
 };
 
-const RangesToolCreate = observer(() => {
-  const { rangesStore } = useStores();
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm<RangeForm>();
+type RangesToolCreateProps = {
+  closeModal: () => void;
+};
 
-  useEffect(() => {
-    rangesStore.createNewRange();
-  }, [rangesStore]);
+const RangesToolCreate: React.VFC<RangesToolCreateProps> = observer(
+  ({ closeModal }) => {
+    const { rangesStore } = useStores();
+    const { register, handleSubmit, errors } = useForm<RangeForm>();
 
-  const onSubmitNewRange: SubmitHandler<RangeForm> = (data) => {
-    console.log({ data });
-  };
+    const onSubmitNewRange: SubmitHandler<RangeForm> = ({ title }) => {
+      rangesStore.addNewUserRange(title);
+      rangesStore.resetNewRange();
+      closeModal();
+    };
 
-  return (
-    <MainWrapper>
-      <RangesWrapper>
-        {rangesStore.newRange.map((row, rowIndex) => {
-          return (
-            <RowWrapper>
-              {row.map(({ value, playType }, cellIndex) => {
-                return (
-                  <Cell
-                    areCardsSame={getAreCardsSame(value)}
-                    playType={playType}
-                    onClick={() =>
-                      rangesStore.updateNewRange(rowIndex, cellIndex)
-                    }
-                  >
-                    {value}
-                  </Cell>
-                );
-              })}
-            </RowWrapper>
-          );
-        })}
-      </RangesWrapper>
-      <UserActionsWrapper>
-        <RangesTitleForm onSubmit={handleSubmit(onSubmitNewRange)}>
-          <input
-            placeholder='Enter title'
-            {...(register('title'), { required: true })}
-          />
-          <input type='submit' />
-        </RangesTitleForm>
-      </UserActionsWrapper>
-    </MainWrapper>
-  );
-});
+    return (
+      <MainWrapper>
+        <RangesWrapper>
+          {rangesStore.newRange.map((row, rowIndex) => {
+            return (
+              <RowWrapper>
+                {row.map(({ value, playType }, cellIndex) => {
+                  return (
+                    <Cell
+                      areCardsSame={getAreCardsSame(value)}
+                      playType={playType}
+                      onClick={() =>
+                        rangesStore.updateNewRange(rowIndex, cellIndex)
+                      }
+                    >
+                      {value}
+                    </Cell>
+                  );
+                })}
+              </RowWrapper>
+            );
+          })}
+        </RangesWrapper>
+        <UserActionsWrapper>
+          <RangesTitleForm onSubmit={handleSubmit(onSubmitNewRange)}>
+            <input
+              placeholder='Enter title'
+              ref={register({ required: true })}
+              name='title'
+            />
+            {errors.title && <span>This field is required.</span>}
+            <button type='submit'>Create</button>
+          </RangesTitleForm>
+        </UserActionsWrapper>
+      </MainWrapper>
+    );
+  }
+);
 
 const MainWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  width: 100%;
 `;
 
 const RangesWrapper = styled.div`
@@ -91,8 +95,14 @@ const Cell = styled.div<{ areCardsSame: boolean; playType: PlayType }>`
   }
 `;
 
-const UserActionsWrapper = styled.div``;
+const UserActionsWrapper = styled.div`
+  width: 100%;
+`;
 
-const RangesTitleForm = styled.form``;
+const RangesTitleForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 export default RangesToolCreate;
