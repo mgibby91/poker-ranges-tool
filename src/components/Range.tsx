@@ -12,7 +12,7 @@ const Range: React.VFC<RangeProps> = ({ title, range }) => {
   return (
     <RangeWrapper>
       <RangeThumbnail range={range} />
-      <span>{title}</span>
+      <h3>{title}</h3>
     </RangeWrapper>
   );
 };
@@ -20,17 +20,23 @@ const Range: React.VFC<RangeProps> = ({ title, range }) => {
 const RangeWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   border: 2px solid #d7dadc;
-  width: 15rem;
-  height: 10rem;
+  width: 14rem;
+  height: 14rem;
   border-radius: 0.5rem;
   margin: 1rem;
+  padding: 0.5rem;
 
   &:hover {
     cursor: pointer;
     background-color: #3a3a3c;
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0;
   }
 `;
 

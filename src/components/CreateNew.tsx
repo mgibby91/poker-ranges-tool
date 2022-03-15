@@ -57,7 +57,7 @@ const CreateNewWrapper = styled.div`
   align-items: center;
   border: 2px solid #d7dadc;
   width: 15rem;
-  height: 10rem;
+  height: 15rem;
   border-radius: 0.5rem;
   margin: 1rem;
 

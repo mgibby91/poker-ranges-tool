@@ -34,8 +34,8 @@ const RangeThumbnail: React.VFC<RangeThumbnailProps> = ({ range }) => {
 
 const RangeThumbnailWrapper = styled.div`
   border: 1px solid #ddd;
-  width: 7rem;
-  height: 7rem;
+  width: 11rem;
+  height: 11rem;
 `;
 
 const RowWrapper = styled.div`
@@ -43,8 +43,8 @@ const RowWrapper = styled.div`
 `;
 
 const Cell = styled.div<{ areCardsSame: boolean; playType: PlayType }>`
-  width: calc(7rem / 13);
-  height: calc(7rem / 13);
+  width: calc(11rem / 13);
+  height: calc(11rem / 13);
   display: flex;
   justify-content: center;
   align-items: center;
